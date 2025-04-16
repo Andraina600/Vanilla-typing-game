@@ -5,17 +5,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Typing Test</title>
+    <link rel="stylesheet" href="./asset/css/style.css">
 </head>
 
 <body>
     <header>
-        <h1>Typing Test</h1>
-        <label for="mode">Select Mode:</label>
-        <select id="mode">
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
-        </select>
+        <div class="site-identity">
+            <img src="asset/images/logo.png" alt="" id="site-identity__logo">
+            <h1><span>T</span>yping <span>G</span>ame</h1>
+        </div>
+
+        <div class="typing-options">
+
+            <div class="select-group">
+                <label id="typing-options__label--chrono">⏱ chrono</label>
+                    <select id="chrono-select">
+                        <option value="-99" selected>--</option>
+                        <option value="15">15s</option>
+                        <option value="30">30s</option>
+                        <option value="60">60s</option>
+                    </select>
+            </div>
+            
+
+            <div class="typing-options__toggle1">
+                <input type="checkbox" id="numbers-toggle">
+                <p class="typing-options__toggle-label">numbers</p>
+            </div>
+
+            <div class="typing-options__toggle2">
+                <input type="checkbox" id="ponctuation-toggle">
+                <p class="typing-options__toggle-label">ponctuation</p>
+            </div>
+
+            <div class="custom-settings">
+                <button class="custom-settings__button">⚙️ custom </button>
+              
+                <div class="custom-settings__menu hidden">
+                  <div class="custom-settings__option">
+                    <label>numbers of word</label>
+                    <input type="number" min="1" max="100">
+                  </div>
+              
+                  <div class="custom-settings__option">
+                    <label>language</label>
+                    <select id="language-select">
+                        <option value="fr">Français</option>
+                        <option value="en">Anglais</option>
+                        <option value="es">Espagnol</option>
+                        <option value="de">Allemand</option>
+                        <option value="it">Italien</option>
+                        <option value="pt">Portugais</option>
+                        <option value="pl">Polonais</option>
+                        <option value="sv">Suédois</option>
+                        <option value="da">Danois</option>
+                        <option value="no">Norvégien</option>
+                        <option value="tr">Turc</option>
+                      </select>                      
+                  </div>
+                </div>
+            </div>
+
+            <div class="select-group">
+                <label id="typing-options__label--level">🧗 level</label>
+                    <select id="level-select">
+                        <option value="easy">easy</option>
+                        <option value="medium">medium</option>
+                        <option value="hard">hard</option>
+                    </select>
+            </div>
+
+            <div class="typing-options__toggle3">
+                <input type="checkbox" id="hardcore-toggle">
+                <p class="typing-options__toggle-label">hardcore 💀</p>
+            </div>
+        </div>
     </header>
 
     <main>
