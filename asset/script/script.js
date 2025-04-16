@@ -5,14 +5,29 @@
  * 
  * Sur ce... Amusez-vous bien ! 
  */
-let startTime = null, previousEndTime = null;
-let currentWordIndex = 0;
-const wordsToType = [];
 
 const modeSelect = document.getElementById("mode");
 const wordDisplay = document.getElementById("word-display");
 const inputField = document.getElementById("input-field");
 const results = document.getElementById("results");
+
+let limit_temps = 0
+let restant = 0
+let highlight_index = 0;
+let isHardcore = false;
+let premier_appuie = false;
+let initial_chrono = 0;
+let inter;
+let accum_wpm = 0;
+let accum_accuracy = 0;
+let accum_error = 0;
+let accum_correct = 0;
+let accum_totale = 0;
+let List_number = 30;
+
+let startTime = null, previousEndTime = null;
+let currentWordIndex = 0;
+const wordsToType = [];
 
 const words = {
     easy: ["apple", "banana", "grape", "orange", "cherry"],
@@ -54,13 +69,49 @@ const startTimer = () => {
     if (!startTime) startTime = Date.now();
 };
 
-// Calculate and return WPM & accuracy
-const getCurrentStats = () => {
-    const elapsedTime = (Date.now() - previousEndTime) / 1000; // Seconds
-    const wpm = (wordsToType[currentWordIndex].length / 5) / (elapsedTime / 60); // 5 chars = 1 word
-    const accuracy = (wordsToType[currentWordIndex].length / inputField.value.length) * 100;
+// ========== ACCURACY ==========
+const fn_acc = () => {
+    let correct = 0
+    let err = 0
+    let len_val_input = inputField.value.length
+    let len_word = wordsToType[currentWordIndex].length
+    let sum_totale = 0
 
-    return { wpm: wpm.toFixed(2), accuracy: accuracy.toFixed(2) };
+    if (Math.min([len_val_input, len_word]) === len_val_input) {
+        inputField.value.split("").forEach((letter, index) => {
+            if(wordsToType[currentWordIndex][index] === letter)
+                correct++
+            else
+                err++
+        })
+        sum_totale = correct + err
+    }
+    else {
+        wordsToType[currentWordIndex].split("").forEach((letter, index) => {
+            if(inputField.value[index] === letter)
+                correct++
+            else
+                err++
+         })
+        sum_totale = correct + err
+    }  
+    return [correct / sum_totale, err, correct, sum_totale]
+    
+}
+
+// ========== STATS ==========
+const getCurrentStats = () => {
+    accRatio = fn_acc();
+    acc_err = fn_acc();
+    acc_correct = fn_acc();
+    acc_NumberChar = fn_acc()
+    const elapsedTime = (Date.now() - previousEndTime) / 1000;
+    const wpm = (wordsToType[currentWordIndex].length / 5) / (elapsedTime / 60);
+    const accuracy = accRatio[0] * 100;
+    const err = acc_err[1]
+    const correct = acc_correct[2]
+    const NumberChar = acc_NumberChar[3]
+    return { wpm : wpm, accuracy: accuracy, error: err, correct: correct , totale: NumberChar };
 };
 
 // Move to the next word and update stats only on spacebar press
