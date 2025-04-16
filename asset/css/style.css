@@ -156,3 +156,16 @@ body {
 #site-identity__logo {
     width: 10%;
 }
+
+/* surplus de css avec les fonctionnalités : chrono, level ... -------- */
+#chrono-select option, #language-select option, #level-select option{
+    background-color: #ffe4f4;
+}
+  
+.custom-settings__menu {
+    background-color: #4a4a4a;
+}
+  
+.custom-settings__button--pink, .typing-options__toggle--pink{
+    background-color: #F1008A;
+}
