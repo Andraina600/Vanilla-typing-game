@@ -473,6 +473,19 @@ inputField.addEventListener("keydown", (event) => {
         premier_appuie = true;
     }
     
+    const typed = inputField.value
+    if(isHardcore){
+        for(let i = 0 ; i < typed.length ; i++){
+            if(typed[i] != wordsToType[currentWordIndex][i]){
+                del.classList.toggle('del-none')
+                result.classList.toggle('result-end')
+                stop_chrono();
+                results.textContent = "Game Over - Hardcore mode";
+                inputField.disabled = true;
+                break;
+            }
+        }
+    }
     updateWord(event);
 });
 chronoSelect.addEventListener("change", () => {
@@ -485,6 +498,11 @@ levelSelect.addEventListener("change", startTest);
 wordCountInput.addEventListener("change", startTest);
 numberToggle.addEventListener("change", startTest);
 punctuationToggle.addEventListener("change", startTest);
+hardcoreToggle.addEventListener("change", () => {
+    isHardcore = hardcoreToggle.checked;
+    inputField.disabled = false;
+    startTest();
+});
 
 // ========== INITIAL ==========
 startTest();
