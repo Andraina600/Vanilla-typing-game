@@ -64,7 +64,7 @@ body {
     border: none;
     font-size: 0.9rem;
 }
-  
+
 /* ---------- pour mes typing-options en général ------------ */
 .typing-options {
     display: flex;
@@ -168,4 +168,64 @@ body {
   
 .custom-settings__button--pink, .typing-options__toggle--pink{
     background-color: #F1008A;
+}
+
+#numbers-toggle, #ponctuation-toggle, #hardcore-toggle, #chrono-select, #level-select {
+    cursor: pointer;
+}
+/*------------------ pour le texte à taper ---------------*/
+#word-display {
+    display: flex;
+    gap: 5px;
+    color: #898989;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;          
+    padding-inline: 10%;
+    padding-block: 1%;
+    box-sizing: border-box;
+    text-align: left;
+    font-size: 25px;
+    font-family: 'Inter', sans-serif;
+}
+  
+.del {
+    display: block;
+}
+
+.del-none {
+    display: none;
+}
+  
+.text {
+    padding-block: 2%;
+}
+
+/*-------------- pour l'input qu'on va mettre les mots à taper + chrono  ---------------*/
+.typing-zone {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+  
+#input-field {
+    width: 25vw;
+    padding-block: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding-left: 10px;
+    outline: none;
+    box-shadow: 10px 10px 8px rgb(25, 25, 25);
+    font-size: 17px;
+    font-weight: bold;
+}
+  
+.chrono {
+    background-color: #F1008A;
+    padding-inline: 10px;
+    color: white;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 10px 10px 8px rgb(25, 25, 25);
+    font-family: 'Inter', sans-serif;
 }
