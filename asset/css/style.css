@@ -265,6 +265,7 @@ body {
   
 .restant-display:hover::after{
     opacity: 1;
+    background-color: #F1008A;
 }
 
 /* ------ result --------- */
@@ -314,6 +315,7 @@ body {
 
 .refresh__btn:hover::after{
     opacity: 1;
+    background-color: #F1008A;
 }
 
 .fa-rotate-right{

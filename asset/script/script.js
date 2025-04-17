@@ -354,7 +354,7 @@ const startTest = () => {
         if(index < List_number) {
             const span = document.createElement("span");
             span.textContent = word + " ";
-            if (index === 0) span.style.color = "pink";
+            if (index === 0) span.style.color = "rgb(255, 105, 180)";
             wordDisplay.appendChild(span);
         } 
             
@@ -461,7 +461,7 @@ const highlightNextWord = () => {
         if (currentWordIndex > 0) {
             wordElements[currentWordIndex - 1].style.color = "black";
         }
-        wordElements[currentWordIndex].style.color = "pink";
+        wordElements[currentWordIndex].style.color = "rgb(255, 105, 180)";
     }
 };
 
