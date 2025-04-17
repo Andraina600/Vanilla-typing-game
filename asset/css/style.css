@@ -283,4 +283,46 @@ body {
 .result p {
     color: #898989
 }
+
+/* --- mode refresh --- */
+.refresh {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.refresh__btn{
+    position: relative;
+}
+
+.refresh__btn::after{
+    content: attr(data-refresh__btn);
+    position: absolute;
+    bottom: -150%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color:#4a4a4a;
+    color: #ffe4f4;
+    padding: 8px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    font-size: 15px;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.2s ease;
+}
+
+.refresh__btn:hover::after{
+    opacity: 1;
+}
+
+.fa-rotate-right{
+    cursor: pointer;
+}
+  
+.refresh i {
+    color: #575757;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
   
