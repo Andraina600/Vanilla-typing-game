@@ -37,6 +37,27 @@ let startTime = null, previousEndTime = null;
 let currentWordIndex = 0;
 const wordsToType = [];
 
+// ========== TOGGLE MENU ==========
+customButton.addEventListener('click', () => {
+    customMenu.classList.toggle('hidden');
+  });
+  
+  customButton.addEventListener('click', () => {
+      customButton.classList.toggle('custom-settings__button--pink');
+  })
+  
+  numberToggle.addEventListener('change', () => {
+      typingToggle1.classList.toggle('typing-options__toggle--pink');
+  })
+  
+  punctuationToggle.addEventListener('change', () => {
+      typingToggle2.classList.toggle('typing-options__toggle--pink');
+  })
+  
+  hardcoreToggle.addEventListener('change', () => {
+      typingToggle3.classList.toggle('typing-options__toggle--pink');
+  })
+
 // ========== DICTIONNAIRES ==========
 const wordBank = {
     en: {
@@ -251,7 +272,7 @@ const getRandomWord = (lang, level, useNumbers, usePunctuation) => {
     return base[Math.floor(Math.random() * base.length)];
 };
 
-// Initialize the typing test
+// ========== TEST INIT ==========
 const startTest = () => {
     const lang = languageSelect.value;
     const level = levelSelect.value;
@@ -364,7 +385,6 @@ const updateWord = (event) => {
         highlightNextWord(highlight_index);
         inputField.value = "";
         event.preventDefault();
-        console.log(chronoSelect.value, limit_temps)
         if (currentWordIndex === wordsToType.length) {
             stop_chrono();
             del.classList.toggle('del-none')
@@ -374,7 +394,8 @@ const updateWord = (event) => {
     }
     
 };
-// Highlight the current word in red
+
+// ========== HIGHLIGHT ==========
 const highlightNextWord = () => {
     const wordElements = wordDisplay.children;
 
@@ -386,13 +407,16 @@ const highlightNextWord = () => {
     }
 };
 
-// Event listeners
-// Attach `updateWord` to `keydown` instead of `input`
+// ========== EVENTS ==========
 inputField.addEventListener("keydown", (event) => {
-    startTimer();
+    if (!startTime) startTime = Date.now();
     updateWord(event);
 });
-modeSelect.addEventListener("change", () => startTest());
+languageSelect.addEventListener("change", startTest);
+levelSelect.addEventListener("change", startTest);
+wordCountInput.addEventListener("change", startTest);
+numberToggle.addEventListener("change", startTest);
+punctuationToggle.addEventListener("change", startTest);
 
-// Start the test
+// ========== INITIAL ==========
 startTest();
