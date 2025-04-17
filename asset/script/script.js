@@ -16,6 +16,7 @@ const del = document.querySelector('.not_resultat')
 
 const modeSelect = levelSelect
 const wordDisplay = document.getElementById("word-display");
+const restDisplay = document.querySelector(".restant-display");
 const inputField = document.getElementById("input-field");
 const result = document.querySelector('.result');
 const results = document.getElementById("results");
@@ -338,14 +339,18 @@ const startTest = () => {
     currentWordIndex = 0;
     startTime = null;
     previousEndTime = null;
+    inputField.value = "";
+    results.textContent = "";
     limit_temps = parseInt(chronoSelect.value);
 
     for (let i = 0; i < wordCount; i++) {
         wordsToType.push(getRandomWord(lang, level, useNumbers, usePunctuation));
     }
 
-    wordsToType.forEach((word, index) => {
+    restant = wordsToType.length - (currentWordIndex)
+    restDisplay.innerHTML = restant
 
+    wordsToType.forEach((word, index) => {
         if(index < List_number) {
             const span = document.createElement("span");
             span.textContent = word + " ";
@@ -354,9 +359,6 @@ const startTest = () => {
         } 
             
     });
-
-    inputField.value = "";
-    results.textContent = "";
 };
 
 // Start the timer when user begins typing
