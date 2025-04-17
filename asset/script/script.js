@@ -17,7 +17,9 @@ const del = document.querySelector('.not_resultat')
 const modeSelect = levelSelect
 const wordDisplay = document.getElementById("word-display");
 const inputField = document.getElementById("input-field");
+const result = document.querySelector('.result');
 const results = document.getElementById("results");
+const chrono = document.getElementById("chrono");
 
 let limit_temps = 0
 let restant = 0
@@ -272,6 +274,44 @@ const getRandomWord = (lang, level, useNumbers, usePunctuation) => {
     return base[Math.floor(Math.random() * base.length)];
 };
 
+// ========== CHRONO ==========
+const update_chrono = () => {
+    if (limit_temps === -99) {
+        initial_chrono++;
+  
+        let minute = Math.floor(initial_chrono / 60);
+        let second = initial_chrono % 60;
+        chrono.innerHTML = `${minute}m:${second}s`;
+    }
+
+    else {
+        initial_chrono++;
+
+        let temp = limit_temps - initial_chrono 
+        
+        let minute = Math.floor(temp / 60);
+        let second = temp % 60;
+        chrono.innerHTML = `${minute}m:${second}s`;
+        if(temp <= 0){
+            stop_chrono()
+            del.classList.toggle('del-none')
+            result.classList.toggle('result-end')
+            results.textContent = `WPM: ${Math.floor(accum_wpm / wordsToType.length)},  Accuracy: ${Math.floor(accum_accuracy / wordsToType.length)}%
+            ,  Errors: ${accum_error}/Correct: ${accum_correct}/Totale: ${accum_totale}`;
+        }
+    }
+      
+};
+
+const start_chrono = () => {
+    inter = setInterval(update_chrono, 1000);
+};
+
+const stop_chrono = () => {
+    clearInterval(inter);
+};
+
+
 // ========== TEST INIT ==========
 const startTest = () => {
     const lang = languageSelect.value;
@@ -280,23 +320,39 @@ const startTest = () => {
     const useNumbers = numberToggle.checked;
     const usePunctuation = punctuationToggle.checked;
     
-    wordsToType.length = 0; // Clear previous words
-    wordDisplay.innerHTML = ""; // Clear display
+    wordsToType.length = 0;
+    wordDisplay.innerHTML = "";
+
+    if(chronoSelect.value !== "-99"){
+        chrono.innerHTML = `00m:${chronoSelect.value}s`
+    }
+    else{
+        chrono.innerHTML = "00m:00s";
+    }
     
-    
+    accum_accuracy = 0;
+    accum_error = 0;
+    accum_wpm = 0;
+    accum_correct = 0;
+    premier_appuie = false;
     currentWordIndex = 0;
     startTime = null;
     previousEndTime = null;
+    limit_temps = parseInt(chronoSelect.value);
 
     for (let i = 0; i < wordCount; i++) {
         wordsToType.push(getRandomWord(lang, level, useNumbers, usePunctuation));
     }
 
     wordsToType.forEach((word, index) => {
-        const span = document.createElement("span");
-        span.textContent = word + " ";
-        if (index === 0) span.style.color = "pink"; // Highlight first word
-        wordDisplay.appendChild(span);
+
+        if(index < List_number) {
+            const span = document.createElement("span");
+            span.textContent = word + " ";
+            if (index === 0) span.style.color = "pink";
+            wordDisplay.appendChild(span);
+        } 
+            
     });
 
     inputField.value = "";
@@ -410,8 +466,18 @@ const highlightNextWord = () => {
 // ========== EVENTS ==========
 inputField.addEventListener("keydown", (event) => {
     if (!startTime) startTime = Date.now();
+    if (!premier_appuie) {
+        start_chrono();
+        premier_appuie = true;
+    }
+    
     updateWord(event);
 });
+chronoSelect.addEventListener("change", () => {
+    startTest()
+    stop_chrono()
+});
+
 languageSelect.addEventListener("change", startTest);
 levelSelect.addEventListener("change", startTest);
 wordCountInput.addEventListener("change", startTest);
