@@ -377,17 +377,6 @@ const highlightNextWord = (index) => {
     }
 };
 
-// ========== RANGE FUNCTION =============
-const range = (list, start, end, step = 1) => {
-    const result = [];
-    for (let i = start; i < end; i += step) {
-        result.push(list[i]);
-    }
-    return result;
-}
-   
-
-
 // ========== TEST INIT ==========
 const startTest = () => {
     const lang = languageSelect.value;
@@ -446,7 +435,17 @@ const startTest = () => {
     });
 };
 
+// ========== RANGE FUNCTION =============
+const range = (list, start, end, step = 1) => {
+    const result = [];
+    for (let i = start; i < end; i += step) {
+        result.push(list[i]);
+    }
+    return result;
+}
+   
 
+//======== UPDATE WORD DISPLAY ============
 const update_wordDisplay = (index)=> {
     new_word_display = range(wordsToType, index, index + List_number, 1)
     wordDisplay.innerHTML = "";
@@ -504,7 +503,7 @@ const updateWord = (event) => {
             canvas.style.display = 'block'
             del.classList.toggle('del-none')
             result.classList.toggle('result-end')
-            results.textContent = `Chrono: ${chrono.innerHTML},   WPM: ${Math.floor(accum_wpm / wordsToType.length)},  Accuracy: ${Math.floor(accum_accuracy / wordsToType.length)}%,  Errors: ${accum_error}/Correct: ${accum_correct}/Totale: ${accum_totale}`;
+            results.textContent = `Chrono: ${chrono.innerHTML},   WPM: ${Math.floor(accum_wpm / wordsToType.length)},   Accuracy: ${Math.floor(accum_accuracy / wordsToType.length)}%,   Errors: ${accum_error}/Correct: ${accum_correct}/Totale: ${accum_totale}`;
         }
     }
     
