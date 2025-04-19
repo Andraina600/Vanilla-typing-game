@@ -371,7 +371,7 @@ const highlightNextWord = (index) => {
     const wordElements = wordDisplay.children;
     if (index < wordElements.length) {
         if (index > 0) {
-        wordElements[index - 1].style.color = "black";
+            wordElements[index - 1].style.color = "black";
         }
         wordElements[index].style.color = "rgb(255, 105, 180)" ;
     }
@@ -504,7 +504,7 @@ const updateWord = (event) => {
             canvas.style.display = 'block'
             del.classList.toggle('del-none')
             result.classList.toggle('result-end')
-            results.textContent = `WPM: ${Math.floor(accum_wpm / wordsToType.length)},  Accuracy: ${Math.floor(accum_accuracy / wordsToType.length)}%,  Errors: ${accum_error}/Correct: ${accum_correct}/Totale: ${accum_totale}`;
+            results.textContent = `Chrono: ${chrono.innerHTML},   WPM: ${Math.floor(accum_wpm / wordsToType.length)},  Accuracy: ${Math.floor(accum_accuracy / wordsToType.length)}%,  Errors: ${accum_error}/Correct: ${accum_correct}/Totale: ${accum_totale}`;
         }
     }
     
@@ -574,6 +574,7 @@ inputField.addEventListener("keydown", (event) => {
     if(isHardcore){
         for(let i = 0 ; i < typed.length ; i++){
             if(typed[i] != wordsToType[currentWordIndex][i]){
+                canvas.style.display = 'block'
                 del.classList.toggle('del-none')
                 result.classList.toggle('result-end')
                 stop_chrono();

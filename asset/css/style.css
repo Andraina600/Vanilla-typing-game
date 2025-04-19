@@ -285,7 +285,7 @@ body {
 }
   
 .result p {
-    color: #898989
+    color: #898989;
 }
 
 #chart-container{
@@ -295,7 +295,7 @@ body {
     background: #1a1a1a;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
+    box-shadow: 0 0 10px rgba(255, 105, 180, 0.4);
     display: none;
   }
 /* --- mode refresh --- */
