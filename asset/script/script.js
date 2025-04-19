@@ -12,9 +12,10 @@ const levelSelect = document.getElementById("level-select");
 const hardcoreToggle = document.getElementById("hardcore-toggle");
 const languageSelect = document.getElementById("language-select");
 const wordCountInput = document.querySelector('.custom-settings__option input');
-const del = document.querySelector('.not_resultat')
+const del = document.querySelector('.not_resultat');
+const canvas = document.getElementById('chart-container');
 
-const modeSelect = levelSelect
+const modeSelect = levelSelect;
 const wordDisplay = document.getElementById("word-display");
 const restDisplay = document.querySelector(".restant-display");
 const inputField = document.getElementById("input-field");
@@ -38,28 +39,30 @@ let List_number = 30;
 
 let startTime = null, previousEndTime = null;
 let currentWordIndex = 0;
-const wordsToType = [];
+let wordsToType = [];
 
 // ========== TOGGLE MENU ==========
 customButton.addEventListener('click', () => {
-    customMenu.classList.toggle('hidden');
-  });
-  
-  customButton.addEventListener('click', () => {
-      customButton.classList.toggle('custom-settings__button--pink');
-  })
-  
-  numberToggle.addEventListener('change', () => {
-      typingToggle1.classList.toggle('typing-options__toggle--pink');
-  })
-  
-  punctuationToggle.addEventListener('change', () => {
-      typingToggle2.classList.toggle('typing-options__toggle--pink');
-  })
-  
-  hardcoreToggle.addEventListener('change', () => {
-      typingToggle3.classList.toggle('typing-options__toggle--pink');
-  })
+  customMenu.classList.toggle('hidden');
+});
+
+customButton.addEventListener('click', () => {
+    customButton.classList.toggle('custom-settings__button--pink');
+})
+
+numberToggle.addEventListener('change', () => {
+    typingToggle1.classList.toggle('typing-options__toggle--pink');
+})
+
+punctuationToggle.addEventListener('change', () => {
+    typingToggle2.classList.toggle('typing-options__toggle--pink');
+})
+
+hardcoreToggle.addEventListener('change', () => {
+    typingToggle3.classList.toggle('typing-options__toggle--pink');
+})
+
+
 
 // ========== DICTIONNAIRES ==========
 const wordBank = {
@@ -266,14 +269,18 @@ const wordBank = {
               "18", "72", "306", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
     punctuation: [",", ".", "!", "?", ":", ";", "*", "#", "{", "}"]
 };
-
 // ========== WORD GENERATION ==========
 const getRandomWord = (lang, level, useNumbers, usePunctuation) => {
     const base = [...wordBank[lang][level]];
-    if (useNumbers) base.push(...wordBank.numbers);
-    if (usePunctuation) base.push(...wordBank.punctuation);
+    if (useNumbers) {
+        base.push(...wordBank.numbers)
+    };
+    if (usePunctuation) {
+        base.push(...wordBank.punctuation)
+    };
     return base[Math.floor(Math.random() * base.length)];
 };
+
 
 // ========== CHRONO ==========
 const update_chrono = () => {
@@ -295,6 +302,7 @@ const update_chrono = () => {
         chrono.innerHTML = `${minute}m:${second}s`;
         if(temp <= 0){
             stop_chrono()
+            canvas.style.display = 'block'
             del.classList.toggle('del-none')
             result.classList.toggle('result-end')
             results.textContent = `WPM: ${Math.floor(accum_wpm / wordsToType.length)},  Accuracy: ${Math.floor(accum_accuracy / wordsToType.length)}%
@@ -310,60 +318,6 @@ const start_chrono = () => {
 
 const stop_chrono = () => {
     clearInterval(inter);
-};
-
-
-// ========== TEST INIT ==========
-const startTest = () => {
-    const lang = languageSelect.value;
-    const level = levelSelect.value;
-    const wordCount = parseInt(wordCountInput.value) || 30;
-    const useNumbers = numberToggle.checked;
-    const usePunctuation = punctuationToggle.checked;
-    
-    wordsToType.length = 0;
-    wordDisplay.innerHTML = "";
-
-    if(chronoSelect.value !== "-99"){
-        chrono.innerHTML = `00m:${chronoSelect.value}s`
-    }
-    else{
-        chrono.innerHTML = "00m:00s";
-    }
-    
-    accum_accuracy = 0;
-    accum_error = 0;
-    accum_wpm = 0;
-    accum_correct = 0;
-    premier_appuie = false;
-    currentWordIndex = 0;
-    startTime = null;
-    previousEndTime = null;
-    inputField.value = "";
-    results.textContent = "";
-    limit_temps = parseInt(chronoSelect.value);
-
-    for (let i = 0; i < wordCount; i++) {
-        wordsToType.push(getRandomWord(lang, level, useNumbers, usePunctuation));
-    }
-
-    restant = wordsToType.length - (currentWordIndex)
-    restDisplay.innerHTML = restant
-
-    wordsToType.forEach((word, index) => {
-        if(index < List_number) {
-            const span = document.createElement("span");
-            span.textContent = word + " ";
-            if (index === 0) span.style.color = "rgb(255, 105, 180)";
-            wordDisplay.appendChild(span);
-        } 
-            
-    });
-};
-
-// Start the timer when user begins typing
-const startTimer = () => {
-    if (!startTime) startTime = Date.now();
 };
 
 // ========== ACCURACY ==========
@@ -411,6 +365,103 @@ const getCurrentStats = () => {
     return { wpm : wpm, accuracy: accuracy, error: err, correct: correct , totale: NumberChar };
 };
 
+
+// ========== HIGHLIGHT ==========
+const highlightNextWord = (index) => {
+    const wordElements = wordDisplay.children;
+    if (index < wordElements.length) {
+        if (index > 0) {
+        wordElements[index - 1].style.color = "black";
+        }
+        wordElements[index].style.color = "rgb(255, 105, 180)" ;
+    }
+};
+
+// ========== RANGE FUNCTION =============
+const range = (list, start, end, step = 1) => {
+    const result = [];
+    for (let i = start; i < end; i += step) {
+        result.push(list[i]);
+    }
+    return result;
+}
+   
+
+
+// ========== TEST INIT ==========
+const startTest = () => {
+    const lang = languageSelect.value;
+    const level = levelSelect.value;
+    let wordCount = parseInt(wordCountInput.value) || 30;
+    const useNumbers = numberToggle.checked;
+    const usePunctuation = punctuationToggle.checked;
+
+    wordsToType.length = 0;
+    wordDisplay.innerHTML = "";
+    if(chronoSelect.value == "15"){
+        wordCount = parseInt(wordCountInput.value) || 12;
+    }
+    if(chronoSelect.value == "30"){
+        wordCount = parseInt(wordCountInput.value) || 25;
+    }
+    if(chronoSelect.value == "60"){
+        wordCount = parseInt(wordCountInput.value) || 50;
+    }
+    
+    if(chronoSelect.value !== "-99"){
+        chrono.innerHTML = `00m:${chronoSelect.value}s`
+    }
+    else{
+        chrono.innerHTML = "00m:00s";
+    }
+    
+    currentWordIndex = 0;
+    startTime = null;
+    previousEndTime = null;
+    accum_accuracy = 0;
+    accum_error = 0;
+    accum_wpm = 0;
+    accum_correct = 0;
+    premier_appuie = false;
+    inputField.value = "";
+    results.textContent = "";
+    limit_temps = parseInt(chronoSelect.value);
+
+    for (let i = 0; i < wordCount; i++) {
+        wordsToType.push(getRandomWord(lang, level, useNumbers, usePunctuation));
+    }
+
+    restant = wordsToType.length - (currentWordIndex)
+    restDisplay.innerHTML = restant
+    
+
+    wordsToType.forEach((word, index) => {
+        if(index < List_number) {
+            const span = document.createElement("span");
+            span.textContent = word + " ";
+            if (index === 0) span.style.color = "rgb(255, 105, 180)";
+            wordDisplay.appendChild(span);
+        } 
+            
+    });
+};
+
+
+const update_wordDisplay = (index)=> {
+    new_word_display = range(wordsToType, index, index + List_number, 1)
+    wordDisplay.innerHTML = "";
+    new_word_display.forEach((word, index) => {
+        if (word !== undefined){
+            const span = document.createElement("span");
+            span.textContent = word + " ";
+            if (index === 0) span.style.color = "rgb(255, 105, 180)";
+            wordDisplay.appendChild(span);
+        }
+            
+            
+    });
+};
+
 // ========== INPUT LOGIC ==========
 
 const updateWord = (event) => {
@@ -418,11 +469,15 @@ const updateWord = (event) => {
     if (event.key === " " ) {
         if (!previousEndTime) previousEndTime = startTime;
         const { wpm, accuracy, error , correct , totale} = getCurrentStats();
-            if(wordsToType[currentWordIndex].length != inputField.value.length){
+            if(wordsToType[currentWordIndex] != inputField.value){
                 accum_wpm += 0
+                labels.push(`Mot ${0}`)
+                wpmValues.push(0)
             }
             else{
                 accum_wpm += wpm   
+                labels.push(`Mot ${currentWordIndex + 1}`);
+                wpmValues.push(Math.floor(wpm));
             }
         accum_accuracy += accuracy;
         accum_error += error;
@@ -442,9 +497,11 @@ const updateWord = (event) => {
         previousEndTime = Date.now();
         highlightNextWord(highlight_index);
         inputField.value = "";
+        
         event.preventDefault();
         if (currentWordIndex === wordsToType.length) {
             stop_chrono();
+            canvas.style.display = 'block'
             del.classList.toggle('del-none')
             result.classList.toggle('result-end')
             results.textContent = `WPM: ${Math.floor(accum_wpm / wordsToType.length)},  Accuracy: ${Math.floor(accum_accuracy / wordsToType.length)}%,  Errors: ${accum_error}/Correct: ${accum_correct}/Totale: ${accum_totale}`;
@@ -453,17 +510,57 @@ const updateWord = (event) => {
     
 };
 
-// ========== HIGHLIGHT ==========
-const highlightNextWord = () => {
-    const wordElements = wordDisplay.children;
+//========= CHART JS ===========
 
-    if (currentWordIndex < wordElements.length) {
-        if (currentWordIndex > 0) {
-            wordElements[currentWordIndex - 1].style.color = "black";
+const labels = [];
+const wpmValues = [];
+
+const chart = new Chart(document.getElementById('mpmChart'), {
+  type: 'line',
+  data: {
+    labels: labels,
+    datasets: [{
+      label: 'WPM',
+      data: wpmValues,
+      backgroundColor: 'rgba(255, 105, 180, 0.2)',
+      borderColor: 'rgba(255, 105, 180, 1)',
+      pointBackgroundColor: 'rgba(255, 105, 180, 1)',
+      fill: true,
+      tension: 0.3
+    }]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Mots par minute',
+          color: '#fff'
+        },
+        ticks: { color: '#fff' },
+        grid: { color: '#333' }
+      },
+      x: {
+        title: {
+          display: true,
+          text: 'Mot #',
+          color: '#fff'
+        },
+        ticks: { color: '#fff' },
+        grid: { color: '#333' }
+      }
+    },
+    plugins: {
+      legend: {
+        labels: {
+          color: '#fff'
         }
-        wordElements[currentWordIndex].style.color = "rgb(255, 105, 180)";
+      }
     }
-};
+  }
+});
 
 // ========== EVENTS ==========
 inputField.addEventListener("keydown", (event) => {
@@ -486,8 +583,10 @@ inputField.addEventListener("keydown", (event) => {
             }
         }
     }
-    updateWord(event);
+  updateWord(event);
 });
+
+
 chronoSelect.addEventListener("change", () => {
     startTest()
     stop_chrono()

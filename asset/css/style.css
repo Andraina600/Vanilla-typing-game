@@ -272,19 +272,32 @@ body {
 .result-end{
     display: flex;
     justify-content: center;
-    margin-top: 6%;
+    margin-top: 1%;
     font-size: 30px;
 }
   
 .result {
     display: flex;
     justify-content: center;
+    gap: 1rem;
+    align-items: center;
+    flex-direction: column;
 }
   
 .result p {
     color: #898989
 }
 
+#chart-container{
+    width: 80%;
+    max-width: 700px;
+    margin: 40px auto;
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
+    display: none;
+  }
 /* --- mode refresh --- */
 .refresh {
     display: flex;
