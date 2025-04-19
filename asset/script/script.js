@@ -77,30 +77,30 @@ const wordBank = {
                "picture", "camera", "mobile", "number", "letter", "sentence", "paragraph", "document",
                "weather", "summer", "winter", "spring", "autumn", "holiday", "travel", "airport"],
       hard: ["synchronize", "complicated", "development", "extravagant", "misconception", "philosophy",
-             "university", "exaggeration", "architecture", "civilization", "demonstration", "environment",
-             "psychology", "mathematics", "engineering", "communication", "organization", "international",
-             "government", "population", "revolution", "temperature", "dictionary", "intelligence",
-             "information", "technology", "application", "electricity", "experiment", "professional",
-             "relationship", "opportunity", "challenge", "responsible", "significant", "traditional",
+             "University", "exaggeration", "architecture", "civilization", "demonstration", "Environment",
+             "psychology", "mathematics", "engineering", "communication", "Organization", "international",
+             "government", "Population", "revolution", "temperature", "Dictionary", "Intelligence",
+             "information", "technology", "Application", "electricity", "experiment", "professional",
+             "relationship", "opportunity", "challenge", "Responsible", "Significant", "Traditional",
              "understanding", "requirement", "improvement", "competition"]
     },
     fr: {
-      easy: ["pomme", "banane", "raisin", "orange", "mangue", "chien", "chat", "maison", "arbre", "livre",
-             "eau", "soleil", "lune", "étoile", "poisson", "oiseau", "voiture", "porte", "stylo", "papier",
+      easy: ["pomme", "banane", "raisin", "orange", "Mangue", "chien", "chat", "maison", "arbre", "livre",
+             "Eau", "soleil", "Lune", "étoile", "Poisson", "oiseau", "voiture", "porte", "stylo", "papier",
              "nourriture", "main", "pied", "œil", "nez", "chapeau", "chaussure", "ballon", "bureau", "chaise",
-             "tasse", "lait", "pain", "œuf", "riz", "soupe", "lit", "lampe", "mur", "horloge"],
-      medium: ["ordinateur", "souris", "jardin", "voiture", "bouteille", "fenêtre", "école", "professeur",
-               "élève", "pays", "ville", "rue", "langue", "programme", "système", "réseau", "internet",
-               "site", "navigateur", "message", "courriel", "image", "appareil", "téléphone", "numéro",
-               "lettre", "phrase", "paragraphe", "document", "météo", "été", "hiver", "printemps", "automne",
+             "tasse", "Lait", "Pain", "œuf", "riz", "soupe", "lit", "lampe", "Mur", "horloge"],
+      medium: ["ordinateur", "Souris", "jardin", "voiture", "bouteille", "fenêtre", "école", "professeur",
+               "élève", "pays", "ville", "rue", "Langue", "programme", "système", "réseau", "internet",
+               "site", "élément","Navigateur", "message", "courriel", "Image", "appareil", "téléphone", "numéro",
+               "lettre", "Phrase", "paragraphe", "document", "météo", "été", "hiver", "Printemps", "automne",
                "vacances", "voyage", "aéroport", "clavier", "écran", "imprimante"],
-      hard: ["synchronisation", "développement", "philosophie", "université", "exagération", "architecture",
-             "civilisation", "démonstration", "environnement", "psychologie", "mathématiques", "ingénierie",
-             "communication", "organisation", "international", "gouvernement", "population", "révolution",
+      hard: ["synchronisation", "développement", "philosophie", "Université", "Exagération", "architecture",
+             "Civilisation", "démonstration", "environnement", "Psychologie", "mathématiques", "Ingénierie",
+             "communication", "Organisation", "international", "gouvernement", "population", "révolution",
              "température", "dictionnaire", "intelligence", "information", "technologie", "application",
-             "électricité", "expérience", "professionnel", "relation", "opportunité", "défi", "responsable",
-             "significatif", "traditionnel", "compréhension", "exigence", "amélioration", "compétition",
-             "caractéristique", "participation", "reconnaissance"]
+             "électricité", "expérience", "Professionnel", "relation", "opportunité", "Défi", "responsable",
+             "significatif", "traditionnel", "compréhension", "exigence", "Amélioration", "compétition",
+             "caractéristique", "participation", "Reconnaissance"]
     },
     es: {
       easy: ["gato", "leche", "pan", "libro", "sol", "perro", "casa", "árbol", "agua", "luna",
@@ -267,7 +267,7 @@ const wordBank = {
     numbers: ["12", "37", "401", "98", "234", "56", "789", "1000", "42",
               "15", "63", "204", "8", "91", "365", "777", "1234", "500", "99",
               "18", "72", "306", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
-    punctuation: [",", ".", "!", "?", ":", ";", "*", "#", "{", "}"]
+    punctuation: [",", ".", "!", "?", ":", ";"]
 };
 // ========== WORD GENERATION ==========
 const getRandomWord = (lang, level, useNumbers, usePunctuation) => {
@@ -476,7 +476,7 @@ const updateWord = (event) => {
             else{
                 accum_wpm += wpm   
                 labels.push(`Mot ${currentWordIndex + 1}`);
-                wpmValues.push(Math.floor(wpm));
+                wpmValues.push(Math.floor(accum_wpm / wordsToType.length));
             }
         accum_accuracy += accuracy;
         accum_error += error;
